@@ -1,5 +1,9 @@
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
+import DAO.Game;
 import DAO.User;
 
 public class App {
@@ -11,11 +15,18 @@ public class App {
         EntityTransaction tx =  em.getTransaction();
         tx.begin();
 
-        User formation = new User();
-        formation.setName("Nathan");
+        Game leagueOfLegends = new Game();
+        leagueOfLegends.setName("League of legends");
 
-        em.persist(formation);
+        User nathan = new User();
+        nathan.setName("Nathan");
 
+        Set<Game> games = new HashSet<Game>();
+        games.add(leagueOfLegends);
+        nathan.setGames(games);
+
+        em.persist(leagueOfLegends);
+        em.persist(nathan);
         tx.commit();
 
         em.close();
