@@ -1,37 +1,24 @@
-import java.sql.SQLException;
-import java.util.List;
+import javax.persistence.*;
 
-import DAO.DAO;
-import DAO.Models.User;
+import DAO.User;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
-        DAO dao = new DAO("jdbc:sqlite:sample.db");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("java-layered-model");
+        EntityManager em = emf.createEntityManager();
 
-        printUsers(dao);
-        
-        User paul = dao.user.post(new User(-1, "Paul"));
-        System.out.println("Paul has been created");
-        
-        printUsers(dao);
+        EntityTransaction tx =  em.getTransaction();
+        tx.begin();
 
-        dao.user.delete(paul.id);
-        System.out.println("Paul has been deleted");
-        
-        printUsers(dao);
-    }
+        User formation = new User();
+        formation.setName("Nathan");
 
-    private static void printUsers(DAO dao){
-        List<User> users;
-        try {
-            users = dao.user.get();
-            users.forEach((user)->{
-                System.out.println(user.id + ":" + user.login);
-            });
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        em.persist(formation);
 
+        tx.commit();
+
+        em.close();
+        emf.close();	
     }
 }
