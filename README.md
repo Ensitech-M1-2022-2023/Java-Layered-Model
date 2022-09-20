@@ -21,4 +21,5 @@ For this project I use SQLite3 & SQlite editor & JDBC:
 ## Progress (v2.0.0)
 Use Layered Model to have a good structure and an ORM to generate database from model and handle mutliple database format : 
 * hibernate : https://hibernate.org/
+
         I use some libs from hibernate. WARNING: the ORM need an old version of Java to work, I currently use java 1.8.
