@@ -1,10 +1,7 @@
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 
-import DAO.Collection;
-import DAO.Game;
+import DAO.GameAction;
+import DAO.GameAdventure;
 
 public class App {
 
@@ -15,22 +12,14 @@ public class App {
         EntityTransaction tx =  em.getTransaction();
         tx.begin();
 
-        Collection RiotGames = new Collection();
+        GameAction gameAction = new GameAction();
+        gameAction.setName("An action game without a name");
+        
+        GameAdventure gameAdventure = new GameAdventure();
+        gameAdventure.setName("An adventure game without a name");
 
-        Game leagueOfLegends = new Game();
-        leagueOfLegends.setName("League of Legends");
-        leagueOfLegends.setCollection(RiotGames);
-
-        Game LeagueOfRunetera = new Game();
-        LeagueOfRunetera.setName("League of Runetera");
-        LeagueOfRunetera.setCollection(RiotGames);
-
-        Set<Game> games = new HashSet<Game>();
-        games.add(leagueOfLegends);
-
-        em.persist(LeagueOfRunetera);
-        em.persist(RiotGames);
-        em.persist(leagueOfLegends);
+        em.persist(gameAction);
+        em.persist(gameAdventure);
         tx.commit();
 
         em.close();
