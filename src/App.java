@@ -3,8 +3,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import DAO.Collection;
 import DAO.Game;
-import DAO.User;
 
 public class App {
 
@@ -15,18 +15,22 @@ public class App {
         EntityTransaction tx =  em.getTransaction();
         tx.begin();
 
-        Game leagueOfLegends = new Game();
-        leagueOfLegends.setName("League of legends");
+        Collection RiotGames = new Collection();
 
-        User nathan = new User();
-        nathan.setName("Nathan");
+        Game leagueOfLegends = new Game();
+        leagueOfLegends.setName("League of Legends");
+        leagueOfLegends.setCollection(RiotGames);
+
+        Game LeagueOfRunetera = new Game();
+        LeagueOfRunetera.setName("League of Runetera");
+        LeagueOfRunetera.setCollection(RiotGames);
 
         Set<Game> games = new HashSet<Game>();
         games.add(leagueOfLegends);
-        nathan.setGames(games);
 
+        em.persist(LeagueOfRunetera);
+        em.persist(RiotGames);
         em.persist(leagueOfLegends);
-        em.persist(nathan);
         tx.commit();
 
         em.close();
