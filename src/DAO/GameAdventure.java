@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("adventure")
 public class GameAdventure extends GameType {
-    public GameAdventure(){
-
+    public GameAdventure(EntityManager em){
+        super(em);
     }
 
 }

@@ -15,7 +15,7 @@
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\Users\Nathan\Desktop\School\Java\Java-Layered-Model\sample.db" />
 
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.flushMode" value="ALWAYS" />
             <property name="hibernate.cache.use_second_level_cache" value="false" />
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />

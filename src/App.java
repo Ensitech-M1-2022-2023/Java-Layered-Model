@@ -15,22 +15,36 @@ public class App {
         EntityTransaction tx =  em.getTransaction();
         tx.begin();
 
-        GameAction gameAction = new GameAction();
+        GameAction gameAction = new GameAction(em);
         gameAction.setName("An action game without a name");
         
-        GameAdventure gameAdventure = new GameAdventure();
+        GameAdventure gameAdventure = new GameAdventure(em);
         gameAdventure.setName("An adventure game without a name");
 
-        em.persist(gameAction);
-        em.persist(gameAdventure);
+        GameType.create(gameAction);
+        GameType.create(gameAdventure);
+
+        printGame(em);
+
+        System.out.println(">>>Delete game with id 1");
+        GameType.delete(new Long(1));
+        printGame(em);
+        
+        System.out.println(">>>Update game with name 'An adventure game without a name' to 'A good game'");
+        GameType.update(gameAdventure.getId(), "A good game");
+        printGame(em);
+
         tx.commit();
-
-        List<GameType> games = em.createNamedQuery(GameType.GET_ALL, GameType.class).getResultList();
-        games.forEach((game)->{
-            System.out.println("Game : " + game.getName());
-        });
-
         em.close();
         emf.close();	
+    }
+
+    public static void printGame(EntityManager em){
+        List<GameType> games = GameType.getAll();
+        System.out.println("--------------------------------------");
+        games.forEach((game)->{
+            System.out.println(game.getId() + " : " + game.getName());
+        });
+        System.out.println("--------------------------------------");
     }
 }
