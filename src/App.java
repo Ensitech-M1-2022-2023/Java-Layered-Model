@@ -1,50 +1,40 @@
 import java.util.*;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
 
-import DAO.GameAction;
-import DAO.GameAdventure;
-import DAO.GameType;
+import DAO.Models.Game;
+import DAO.Models.GameAction;
+import DAO.Models.GameAdventure;
+import Service.Service;
 
 public class App {
-
     public static void main(String[] args) throws Exception {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("java-layered-model");
-        EntityManager em = emf.createEntityManager();
+        Service service = new Service("java-layered-model");
 
-        EntityTransaction tx =  em.getTransaction();
-        tx.begin();
+        Game gameA = new Game();
+        gameA.setName("gameA");
+        Game gameB = new GameAction();
+        gameB.setName("gameB");
+        Game gameC = new GameAction();
+        gameC.setName("gameC");
+        Game gameD = new GameAdventure();
+        gameD.setName("gameD");
 
-        GameAction gameAction = new GameAction(em);
-        gameAction.setName("An action game without a name");
-        
-        GameAdventure gameAdventure = new GameAdventure(em);
-        gameAdventure.setName("An adventure game without a name");
+        service.game.create(gameA);
+        service.game.create(gameB);
+        service.game.create(gameC);
+        service.game.create(gameD);
 
-        GameType.create(gameAction);
-        GameType.create(gameAdventure);
+        service.game.delete(gameB.getId());
 
-        printGame(em);
+        service.game.update(gameA.getId(), "gameAUpdated");
 
-        System.out.println(">>>Delete game with id 1");
-        GameType.delete(new Long(1));
-        printGame(em);
-        
-        System.out.println(">>>Update game with name 'An adventure game without a name' to 'A good game'");
-        GameType.update(gameAdventure.getId(), "A good game");
-        printGame(em);
-
-        tx.commit();
-        em.close();
-        emf.close();	
-    }
-
-    public static void printGame(EntityManager em){
-        List<GameType> games = GameType.getAll();
-        System.out.println("--------------------------------------");
-        games.forEach((game)->{
-            System.out.println(game.getId() + " : " + game.getName());
+        List<Game> games = service.game.get();
+        games.forEach((_game)->{
+            System.out.println(_game.getName());
         });
-        System.out.println("--------------------------------------");
+
+        Game bestGame = service.game.get(new Long(4));
+        System.out.println("Best game is " + bestGame.getName());
     }
 }
