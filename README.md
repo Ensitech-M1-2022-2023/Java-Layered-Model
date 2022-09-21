@@ -1,4 +1,4 @@
-# DB access practice in java (Current: v2.0.0)
+# DB access practice in java (Current: v2.1.0)
 
 ## Intro
 This project is a practice to create a connection to a database in java.
@@ -23,3 +23,6 @@ Use Layered Model to have a good structure and an ORM to generate database from 
 * hibernate : https://hibernate.org/
 
         I use some libs from hibernate. WARNING: the ORM need an old version of Java to work, I currently use java 1.8.
+
+## Progress (v2.1.0)
+Clean up Layered model and setup everything to do CRUD
